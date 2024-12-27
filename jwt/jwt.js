@@ -21,7 +21,7 @@ export const verifyToken = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure JWT_SECRET is set in environment variables
     req.user = decoded; // Attach the decoded payload to the request
-
+    
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized", error: error.message });

@@ -12,7 +12,7 @@ router.post('/signup',signupController)
 router.get('/getUser',verifyToken,GetUserController);
 
 
-router.delete('/delete',deleteUsercontroller)
+router.delete('/delete',verifyToken,deleteUsercontroller)
 
 
 export default router;

@@ -33,10 +33,9 @@ export const loginController = async (req,res)=>{
 export const signupController = async(req,res)=>{
     
     try {
-     const {name,email,password,mobile} = req.body;
-     console.log(name);
+     const {name,email,password,mobile,role} = req.body;
      
-     
+    
       
      if(!name || !email || !password || !mobile){
          return res.status(400).json({message:"Please fill all the fields"})
@@ -44,14 +43,14 @@ export const signupController = async(req,res)=>{
  
      const user = await User.findOne({email:email});
  
-     console.log(user);
+   
  
      if(user){
         return res.status(400).send("User already exists");
      }
      else{
          
-         const newUser = new User({name:name,email:email,password:password,mobile:mobile});
+         const newUser = new User({name:name,email:email,password:password,mobile:mobile,role:role});
          await newUser.save();
          const token = await generateToken({
             id:newUser.id,
@@ -90,18 +89,16 @@ export const GetUserController = async(req,res)=>{
 
 export const deleteUsercontroller = async(req,res)=>{
     try {
-         const {email} = req.body;
-            
-         if(!email){
-            return res.status(400).json({message:"invalid email"})
+         const {id} = req.user;
+         const user = await User.findById(id);
+
+         if(!user){
+            return res.status(400).json({message:"user not found"})
          }
 
-         const user = await User.findOne({email:email});
-         if(!user){
-            return res.status(400).json({message:"user doesn't exist"});
-         }
         
-         const RemovableUser = await User.deleteOne({email:email});
+        
+         const RemovableUser = await User.findByIdAndDelete(id);
 
          return res.status(200).json({user:user});
     } catch (error) {
