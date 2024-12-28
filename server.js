@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import userRoutes from './Routes/UserRouter.js';
 import connectdb from './db.js';
 import TrainRoutes from './Routes/TrainRouter.js';
+import BookingRoutes from './Routes/BookingRoutes.js'
 
 
 const app = express();
@@ -12,6 +13,7 @@ connectdb();
 app.use(express.json());
 app.use('/user',userRoutes);
 app.use('/train',TrainRoutes);
+app.use('/ticket',BookingRoutes);
 
 app.get('/',(req,res)=>{
     res.send("server started");

@@ -1,5 +1,5 @@
 import express from 'express';
-import {createTrain,deleteTrain,FindTrain} from '../Controllers/trainController.js'
+import {createTrain,deleteTrain,FindTrain,CheckAvailableSeats} from '../Controllers/trainController.js'
 import { verifyToken } from '../jwt/jwt.js';
 import User from '../Models/UserModel.js';
 
@@ -20,5 +20,6 @@ const isAdmin = async(req,res,next)=>{
 router.post('/create',verifyToken,isAdmin,createTrain);
 router.delete('/delete',verifyToken,isAdmin,deleteTrain);
 router.get('/find',FindTrain);
+router.get('/checkSeats',verifyToken,CheckAvailableSeats);
 
 export default router;

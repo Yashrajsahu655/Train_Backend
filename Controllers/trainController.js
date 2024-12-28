@@ -110,3 +110,18 @@ export const deleteTrain = async(req,res) =>{
        }
 }
 
+export const CheckAvailableSeats = async (req,res)=>{
+
+      try {
+           const {train_number} = req.body;
+           const train = await Train.findOne({train_number:train_number});
+            if(!train){
+              return res.status(404).json({message:"no such train found"});
+            }
+          return res.status(300).json({seats:train.Seats});
+
+      } catch (error) {
+        return res.status(404).json({error:error.message});
+      }
+}
+
